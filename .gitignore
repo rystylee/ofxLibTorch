@@ -1,0 +1,38 @@
+*bin/*.app
+*.mp4
+*imgui.ini
+*.pt
+
+libs/*
+
+## mac
+*config.make
+*Makefile
+*openFrameworks-Info.plist
+*Project.xcconfig
+*.xcodeproj
+
+.DS_Store
+*/.DS_Store
+
+## windows
+*.obj
+*.vs
+*.exe
+*.ilk
+*.lib
+*.pdb
+*.exp
+*.iobj
+*.ipdb
+*.dll
+*.sln
+*.vcxproj*
+*icon.rc
+*obj
+
+# Editor
+.vscode/*
+
+# Keep empty folder
+!.gitkeep

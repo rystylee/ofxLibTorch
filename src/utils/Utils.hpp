@@ -1,7 +1,8 @@
 #pragma once
 
-#include <torch/torch.h>
-#include <opencv2/opencv.hpp>
+#include <iostream>
+#include <vector>
+#include <chrono>
 
 namespace ofxLibTorch
 {
@@ -41,18 +42,9 @@ namespace ofxLibTorch
             return ((value - inputMin) / (inputMax - inputMin) * (outputMax - outputMin) + outputMin);
         }
 
-        template <typename T>
-        cv::Mat toCv(ofPixels_<T>& pix)
-        {
-            int depth;
-            switch(pix.getBytesPerChannel())
-            {
-                case 4: depth = CV_32F;
-                case 2: depth = CV_16U;
-                case 1: default: depth = CV_8U;
-            }
-            return cv::Mat(pix.getHeight(), pix.getWidth(), CV_MAKETYPE(depth, pix.getNumChannels()), pix.getData(), 0);
-        }
+        // Time processing
+        std::chrono::system_clock::time_point start();
+        void end(const std::chrono::system_clock::time_point& start);
 
     } // namespace util
 } // namespace ofxLibTorch

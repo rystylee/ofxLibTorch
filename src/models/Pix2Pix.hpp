@@ -2,14 +2,13 @@
 
 #include "ofMain.h"
 
-#include <torch/torch.h>
-#include <torch/script.h>
-#include "../Utilities.hpp"
+#include "BaseModel.hpp"
+#include "../utils/TorchUtils.hpp"
 
 namespace ofxLibTorch
 {
 
-    class Pix2Pix
+    class Pix2Pix final : public BaseModel
     {
     public:
         Pix2Pix();
@@ -23,10 +22,6 @@ namespace ofxLibTorch
         static void denormalize(at::Tensor& tensor);
     
     private:
-        std::unique_ptr<torch::Device> mDevice;
-        std::shared_ptr<torch::jit::script::Module> mModule;
-        
-        // (h, w)
         int mInputH, mInputW;
     
     };

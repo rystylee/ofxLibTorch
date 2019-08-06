@@ -163,20 +163,20 @@ bool FastFboReader::readToFloatPixels(const ofFbo &fbo, ofFloatPixelsRef pix, of
 
 void FastFboReader::genPBOs()
 {
-	if (!pboIds)
-	{
-		pboIds = new GLuint[num_buffers];
-		glGenBuffers(num_buffers, pboIds);
-	}
+    if (!pboIds)
+    {
+        pboIds = new GLuint[num_buffers];
+        glGenBuffers(num_buffers, pboIds);
+    }
 }
 
 void FastFboReader::setupPBOs(int num_bytes)
 {
-	for (int i = 0; i < num_buffers; i++)
-	{
-		glBindBuffer(GL_PIXEL_PACK_BUFFER, pboIds[i]);
-		glBufferData(GL_PIXEL_PACK_BUFFER, num_bytes, NULL, GL_STREAM_READ);
-	}
-	
-	glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
+    for (int i = 0; i < num_buffers; i++)
+    {
+        glBindBuffer(GL_PIXEL_PACK_BUFFER, pboIds[i]);
+        glBufferData(GL_PIXEL_PACK_BUFFER, num_bytes, NULL, GL_STREAM_READ);
+    }
+    
+    glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
 }

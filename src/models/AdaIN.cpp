@@ -5,11 +5,6 @@ namespace ofxLibTorch
 
     AdaIN::AdaIN()
     {
-        if (torch::cuda::is_available())
-            mDevice = std::make_unique<torch::Device>(torch::kCUDA);
-        else
-            mDevice = std::make_unique<torch::Device>(torch::kCPU);
-
         float std_data[] = { 0.229, 0.224, 0.225 };
         mStdTensor =  torch::from_blob(std_data, { 3, 1, 1 }, at::TensorOptions(at::kFloat)).to(*mDevice.get());
 
@@ -19,13 +14,7 @@ namespace ofxLibTorch
 
     void AdaIN::init(const std::string& modelPath)
     {
-        mModule = torch::jit::load(modelPath, *mDevice.get());
-        mModule->eval();
-
-        if (mModule == nullptr)
-            std::cerr << "Error: Failed to load Torch Script Module..." << std::endl;
-        else
-            std::cout << "Succeed to load Torch Script Module!" << std::endl;
+        loadModel(modelPath);
     }
 
     void AdaIN::forward(const ofFbo& contentFbo, const ofFbo& styleFbo, const float alpha)
@@ -33,24 +22,14 @@ namespace ofxLibTorch
         torch::NoGradGuard noGrad;
 
         // Content image
-        ofFloatPixels contentPix;
-        contentFbo.readToPixels(contentPix);
-        //mFastFboReader.readToFloatPixels(contentFbo, contentPix);
-        cv::Mat contentMat = util::toCv(contentPix);
-        at::Tensor content_tensor = torch::from_blob(contentMat.data, at::IntList({ contentMat.rows, contentMat.cols, contentMat.channels() }), at::TensorOptions(at::kFloat)).to(*mDevice.get());
-        content_tensor = content_tensor.permute({ 2, 0, 1 }).unsqueeze(0);
+        at::Tensor contentTensor = util::fboToFloatTensor(contentFbo, *mDevice.get());
 
         // Style image
-        ofFloatPixels stylePix;
-        styleFbo.readToPixels(stylePix);
-        //mFastFboReader.readToFloatPixels(styleFbo, stylePix);
-        cv::Mat styleMat = util::toCv(stylePix);
-        at::Tensor style_tensor = torch::from_blob(styleMat.data, at::IntList({ styleMat.rows, styleMat.cols, styleMat.channels() }), at::TensorOptions(at::kFloat)).to(*mDevice.get());
-        style_tensor = style_tensor.permute({ 2, 0, 1 }).unsqueeze(0);
+        at::Tensor styleTensor = util::fboToFloatTensor(styleFbo, *mDevice.get());
 
         // Normalize
-        normalize_(content_tensor);
-        normalize_(style_tensor);
+        normalize_(contentTensor);
+        normalize_(styleTensor);
 
         // Alpha factor
         float alpha_data[] = { alpha };
@@ -60,7 +39,7 @@ namespace ofxLibTorch
         // Forward process
         // output_tensor { batch, channel, height, width }
         //
-        at::Tensor output_tensor = mModule->forward({ content_tensor, style_tensor, alpha_tensor }).toTensor();
+        at::Tensor output_tensor = mModule->forward({ contentTensor, styleTensor, alpha_tensor }).toTensor();
 
         denormalize_(output_tensor);
 
@@ -69,19 +48,12 @@ namespace ofxLibTorch
 
         float* data = output_tensor.data<float>();
 
-        ofFloatImage img;
-        img.setFromPixels(data, output_tensor.size(1), output_tensor.size(0), OF_IMAGE_COLOR, false);
-        img.draw(glm::vec2(0), ofGetWidth(), ofGetHeight());
+        mImg.setFromPixels(data, output_tensor.size(1), output_tensor.size(0), OF_IMAGE_COLOR, false);
     }
 
-    void AdaIN::normalize_(at::Tensor& tensor)
+    void AdaIN::render(const glm::vec2& pos, const float w, const float h)
     {
-        tensor.sub_(mMeanTensor).div_(mStdTensor);
-    }
-
-    void AdaIN::denormalize_(at::Tensor& tensor)
-    {
-        torch::clamp_(tensor.mul_(mStdTensor).add_(mMeanTensor), 0, 1);
+        mImg.draw(pos, w, h);
     }
 
 } // namespace ofxLibTorch

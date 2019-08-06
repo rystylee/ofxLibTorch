@@ -5,19 +5,13 @@ namespace ofxLibTorch
 
     Pix2Pix::Pix2Pix()
     {
-        if (torch::cuda::is_available())
-            mDevice = std::make_unique<torch::Device>(torch::kCUDA);
-        else
-            mDevice = std::make_unique<torch::Device>(torch::kCPU);
-        std::cout << "Device: " << *mDevice.get() << std::endl;
     }
 
     void Pix2Pix::init(const std::string& modelPath, const int inputH, const int inputW)
     {
         mInputH = inputH; mInputW = inputW;
 
-        mModule = torch::jit::load(modelPath, *mDevice.get());
-        mModule->eval();
+        loadModel(modelPath);
 
         if (mModule == nullptr)
             std::cerr << "Error: Failed to load Torch Script Module..." << std::endl;
@@ -30,7 +24,7 @@ namespace ofxLibTorch
         // LibTorch version of PyTorch's torch.no_grad()
         torch::NoGradGuard no_grad;
 
-        cv::Mat inputMat = ofxLibTorch::util::toCv(img.getPixels());
+        cv::Mat inputMat = util::toCv(img.getPixels());
         at::Tensor inputTensor = torch::from_blob(inputMat.data, at::IntList({ inputMat.rows, inputMat.cols, inputMat.channels() }), at::TensorOptions(at::kFloat)).to(*mDevice.get());
         inputTensor = inputTensor.permute({ 2, 0, 1 }).unsqueeze(0);
 

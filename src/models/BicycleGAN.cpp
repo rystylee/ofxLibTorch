@@ -25,7 +25,7 @@ namespace ofxLibTorch
     {
         torch::NoGradGuard no_grad;
 
-        cv::Mat inputMat = ofxLibTorch::util::toCv(img.getPixels());
+        cv::Mat inputMat = util::toCv(img.getPixels());
         at::Tensor inputTensor = torch::from_blob(inputMat.data, at::IntList({ inputMat.rows, inputMat.cols, inputMat.channels() }), at::TensorOptions(at::kFloat)).to(*mDevice.get());
         inputTensor = inputTensor.permute({ 2, 0, 1 }).unsqueeze(0);
 

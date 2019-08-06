@@ -3,7 +3,7 @@
 #include "ofMain.h"
 
 #include "BaseModel.hpp"
-#include "../Utilities.hpp"
+#include "../utils/TorchUtils.hpp"
 
 namespace ofxLibTorch
 {

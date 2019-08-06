@@ -2,32 +2,36 @@
 
 #include "ofMain.h"
 
-#include <torch/torch.h>
-#include <torch/script.h>
-
-#include "../Utilities.hpp"
+#include "BaseModel.hpp"
+#include "../utils/TorchUtils.hpp"
 #include "../FastFboReader.hpp"
-#include "../ProcessingTime.hpp"
 
 namespace ofxLibTorch
 {
 
-    class AdaIN
+    class AdaIN final : BaseModel
     {
     public:
         AdaIN();
         void init(const std::string& modelPath);
         void forward(const ofFbo& contentFbo, const ofFbo& styleFbo, const float alpha);
+        void render(const glm::vec2& pos, const float w, const float h);
 
-        void normalize_(at::Tensor& tensor);
-        void denormalize_(at::Tensor& tensor);
+        void normalize_(at::Tensor& tensor)
+        {
+            tensor.sub_(mMeanTensor).div_(mStdTensor);
+        }
+
+        void denormalize_(at::Tensor& tensor)
+        {
+            torch::clamp_(tensor.mul_(mStdTensor).add_(mMeanTensor), 0, 1);
+        }
 
     private:
-        std::unique_ptr<torch::Device> mDevice;
-        std::shared_ptr<torch::jit::script::Module> mModule;
-
         at::Tensor mStdTensor;
         at::Tensor mMeanTensor;
+
+        ofFloatImage mImg;
 
         FastFboReader mFastFboReader;
     };

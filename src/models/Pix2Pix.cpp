@@ -21,7 +21,6 @@ namespace ofxLibTorch
 
     void Pix2Pix::forward(ofFloatImage& img)
     {
-        // LibTorch version of PyTorch's torch.no_grad()
         torch::NoGradGuard no_grad;
 
         cv::Mat inputMat = util::toCv(img.getPixels());

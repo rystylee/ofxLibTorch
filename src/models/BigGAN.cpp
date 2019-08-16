@@ -52,6 +52,56 @@ namespace ofxLibTorch
         img.setFromPixels(data, outputTensor.size(1), outputTensor.size(0), OF_IMAGE_COLOR, false);
     }
 
+    void BigGAN::forward(ofFloatImage& img, const int classIndex, const float truncation)
+    {
+        torch::NoGradGuard noGrad;
+
+        float truncation_data[] = { truncation };
+        at::Tensor truncationTensor = torch::from_blob(truncation_data, at::IntList({ 1 }), at::TensorOptions(at::kFloat)).to(*mDevice.get());
+
+        at::Tensor classTensor = oneHotFromInt(classIndex);
+
+        //
+        // Forward process
+        // output_tensor { batch, channel, height, width }
+        //
+        at::Tensor outputTensor = mModule->forward({ mNoiseTensor, classTensor, truncationTensor }).toTensor();
+
+        // Denormalize
+        BigGAN::denormalize_(outputTensor);
+
+        // outputTensor { height, width, channel }
+        outputTensor = outputTensor.squeeze().permute({ 1, 2, 0 }).to(torch::kCPU);
+
+        float* data = outputTensor.data<float>();
+
+        img.setFromPixels(data, outputTensor.size(1), outputTensor.size(0), OF_IMAGE_COLOR, false);
+    }
+
+    void BigGAN::forward(ofFloatImage& img, at::Tensor& classTensor, const float truncation)
+    {
+        torch::NoGradGuard noGrad;
+
+        float truncation_data[] = { truncation };
+        at::Tensor truncationTensor = torch::from_blob(truncation_data, at::IntList({ 1 }), at::TensorOptions(at::kFloat)).to(*mDevice.get());
+
+        //
+        // Forward process
+        // output_tensor { batch, channel, height, width }
+        //
+        at::Tensor outputTensor = mModule->forward({ mNoiseTensor, classTensor, truncationTensor }).toTensor();
+
+        // Denormalize
+        BigGAN::denormalize_(outputTensor);
+
+        // outputTensor { height, width, channel }
+        outputTensor = outputTensor.squeeze().permute({ 1, 2, 0 }).to(torch::kCPU);
+
+        float* data = outputTensor.data<float>();
+
+        img.setFromPixels(data, outputTensor.size(1), outputTensor.size(0), OF_IMAGE_COLOR, false);
+    }
+
     void BigGAN::stepClass()
     {
         if (mClassStepCounter > mClassMaxSteps)
@@ -84,9 +134,6 @@ namespace ofxLibTorch
         mNoiseStepCounter += 1.0f;
     }
 
-    //--------------------------------------------------------------
-    // Private
-    //--------------------------------------------------------------
     at::Tensor BigGAN::truncatedNoiseSample(c10::IntArrayRef size, const float truncation)
     {
         at::Tensor noise = torch::zeros(size, at::TensorOptions(at::kFloat)).to(*mDevice.get());
@@ -108,5 +155,9 @@ namespace ofxLibTorch
         }
         return torch::from_blob(oneHot, at::IntList({ mBatchSize, mNumClasses }), at::TensorOptions(at::kFloat)).to(*mDevice.get());
     }
+
+    //--------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------
 
 } // namespace ofxLibTorch

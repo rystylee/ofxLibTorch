@@ -5,3 +5,4 @@
 #include "models/Pix2Pix.hpp"
 #include "models/BigGAN.hpp"
 #include "models/PGGAN.hpp"
+#include "models/VGG16.hpp"

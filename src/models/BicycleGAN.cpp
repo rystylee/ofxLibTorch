@@ -65,4 +65,28 @@ namespace ofxLibTorch
         mNoiseStepCounter += 1.0f;
     }
 
+    void BicycleGAN::addNoise(ofFloatImage& img, const float strength = 0.1)
+    {
+        auto data = img.getPixels();
+        for (auto& d : data)
+        {
+            float n = 0.0;
+            n = ofNoise(d * 0.1, ofGetElapsedTimef() * 0.01);
+            d += n * strength;
+            d = ofClamp(d, 0.0, 1.0);
+        }
+        img.setFromPixels(data.getPixels(), img.getWidth(), img.getHeight(), OF_IMAGE_COLOR, true);
+    }
+
+    void BicycleGAN::invert(ofFloatImage& img)
+    {
+        auto data = img.getPixels();
+        for (auto& d : data)
+        {
+            d = 1.0 - d;
+            d = ofClamp(d, 0.0, 1.0);
+        }
+        img.setFromPixels(data.getPixels(), img.getWidth(), img.getHeight(), OF_IMAGE_COLOR, true);
+    }
+
 } // namespace ofxLibTorch

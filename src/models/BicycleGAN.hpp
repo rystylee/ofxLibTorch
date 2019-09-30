@@ -18,6 +18,9 @@ namespace ofxLibTorch
 
         void stepNoise();
 
+        static void addNoise(ofFloatImage& img, const float strength);
+        static void invert(ofFloatImage& img);
+
         static inline void normalize_(at::Tensor& tensor)
         {
             tensor.mul_(2.0).sub_(1.0);

@@ -28,22 +28,22 @@ namespace ofxLibTorch
         inputTensor = inputTensor.permute({ 2, 0, 1 }).unsqueeze(0);
 
         // Normalize
-        Pix2Pix::normalize(inputTensor);
+        Pix2Pix::normalize_(inputTensor);
 
         //
         // Forward process
-        // output_tensor { batch, channel, height, width }
+        // outputTensor { batch, channel, height, width }
         //
-        at::Tensor output_tensor = mModule->forward({ inputTensor }).toTensor();
+        at::Tensor outputTensor = mModule->forward({ inputTensor }).toTensor();
 
         // Denormalize
-        Pix2Pix::denormalize(output_tensor);
+        Pix2Pix::denormalize_(outputTensor);
 
         // (c, h, w) -> (h, w, c)
-        output_tensor = output_tensor.squeeze().permute({ 1, 2, 0 }).to(torch::kCPU);
-        float* data = output_tensor.data<float>();
+        outputTensor = outputTensor.squeeze().permute({ 1, 2, 0 }).to(torch::kCPU);
+        float* data = outputTensor.data<float>();
 
-        img.setFromPixels(data, output_tensor.size(1), output_tensor.size(0), OF_IMAGE_COLOR, false);
+        img.setFromPixels(data, outputTensor.size(1), outputTensor.size(0), OF_IMAGE_COLOR, false);
     }
 
     void Pix2Pix::addNoise(ofFloatImage& img, const float strength = 0.1)
@@ -68,16 +68,6 @@ namespace ofxLibTorch
             d = ofClamp(d, 0.0, 1.0);
         }
         img.setFromPixels(data.getPixels(), img.getWidth(), img.getHeight(), OF_IMAGE_COLOR, true);
-    }
-
-    void Pix2Pix::normalize(at::Tensor& tensor)
-    {
-        tensor.mul_(2.0).sub_(1.0);
-    }
-
-    void Pix2Pix::denormalize(at::Tensor& tensor)
-    {
-        tensor.add_(1.0).mul_(0.5);
     }
 
 } // namespace ofxLibTorch

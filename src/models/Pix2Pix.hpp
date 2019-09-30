@@ -18,8 +18,15 @@ namespace ofxLibTorch
         void addNoise(ofFloatImage& img, const float strength);
         void invert(ofFloatImage& img);
     
-        static void normalize(at::Tensor& tensor);
-        static void denormalize(at::Tensor& tensor);
+        static void normalize_(at::Tensor& tensor)
+        {
+            tensor.mul_(2.0).sub_(1.0);
+        }
+
+        static void denormalize_(at::Tensor& tensor)
+        {
+            tensor.add_(1.0).mul_(0.5);
+        }
     
     private:
         int mInputH, mInputW;

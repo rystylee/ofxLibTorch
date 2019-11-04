@@ -6,29 +6,112 @@
 #include "BaseModel.hpp"
 #include "../utils/TorchUtils.hpp"
 
-namespace ofxLibTorch
+namespace ofx {
+namespace libtorch {
+
+class VGG16 final : public BaseModel
 {
+public:
+    VGG16();
+    void init(const std::string& modelPath);
+    //std::pair<int, float> forward(const ofFbo& inputFbo);
+    //std::pair<int, at::Tensor> forward(const ofFbo& inputFbo);
 
-    class VGG16 final : public BaseModel
+    template <typename T>
+    T forward(const ofFbo& inputFbo);
+
+    template<>
+    std::pair<int, float> forward(const ofFbo& inputFbo)
     {
-    public:
-        VGG16();
-        void init(const std::string& modelPath);
-        void forward(const ofFbo& inputFbo);
+        torch::NoGradGuard noGrad;
 
-        inline void preprocess_(torch::Tensor& tensor)
-        {
-            tensor.sub_(mMeanTensor).div_(mStdTensor);
-        }
+        at::Tensor inputTensor = util::fboToFloatTensor(inputFbo, *mDevice.get());
 
-    private:
-        void loadJson(const std::string& filePath);
+        preprocess_(inputTensor);
 
-        std::map<int, std::string> mClassLabels;
+        //
+        // Forward process
+        // outputTensor { batch, 1000 }
+        //
+        at::Tensor outputTensor = mModule->forward({ inputTensor }).toTensor();
 
-        at::Tensor mStdTensor;
-        at::Tensor mMeanTensor;
+        at::Tensor out = torch::softmax(outputTensor, 1);
+        auto maxId = torch::argmax(out).item();
+        auto maxProb = torch::max(out).item();
 
-    };
+        std::cout << "Probability: " << maxProb << std::endl;
+        std::cout << "Label: " << mClassLabels[maxId.toInt()] << std::endl;
 
-} // namespace ofxLibTorch
+        return std::make_pair(maxId.toInt(), maxProb.toFloat());
+    }
+
+    template<>
+    std::pair<int, at::Tensor> forward(const ofFbo& inputFbo)
+    {
+        torch::NoGradGuard noGrad;
+
+        at::Tensor inputTensor = util::fboToFloatTensor(inputFbo, *mDevice.get());
+
+        preprocess_(inputTensor);
+
+        //
+        // Forward process
+        // outputTensor { batch, 1000 }
+        //
+        at::Tensor outputTensor = mModule->forward({ inputTensor }).toTensor();
+
+        at::Tensor out = torch::softmax(outputTensor, 1);
+        auto maxId = torch::argmax(out).item();
+        auto maxProb = torch::max(out).item();
+
+        //std::cout << "Probability: " << maxProb << std::endl;
+        //std::cout << "Label: " << mClassLabels[maxId.toInt()] << std::endl;
+
+        return std::make_pair(maxId.toInt(), outputTensor.squeeze().to(torch::kCPU));
+    }
+
+    template <typename T>
+    T forward(const ofFloatPixels& inputPixels);
+
+    template<>
+    std::pair<int, at::Tensor> forward(const ofFloatPixels& inputPixel)
+    {
+        torch::NoGradGuard noGrad;
+
+        at::Tensor inputTensor = util::floatPixelsToFloatTensor(inputPixel, *mDevice.get());
+
+        preprocess_(inputTensor);
+
+        //
+        // Forward process
+        // outputTensor { batch, 1000 }
+        //
+        at::Tensor outputTensor = mModule->forward({ inputTensor }).toTensor();
+
+        at::Tensor out = torch::softmax(outputTensor, 1);
+        auto maxId = torch::argmax(out).item();
+        auto maxProb = torch::max(out).item();
+
+        //std::cout << "Probability: " << maxProb << std::endl;
+        //std::cout << "Label: " << mClassLabels[maxId.toInt()] << std::endl;
+
+        return std::make_pair(maxId.toInt(), outputTensor.squeeze().to(torch::kCPU));
+    }
+
+    inline void preprocess_(torch::Tensor& tensor)
+    {
+        tensor.sub_(mMeanTensor).div_(mStdTensor);
+    }
+
+private:
+    void loadJson(const std::string& filePath);
+
+    std::map<int, std::string> mClassLabels;
+
+    at::Tensor mStdTensor;
+    at::Tensor mMeanTensor;
+
+};
+
+} // namespace libtorch
+} // namespace ofx

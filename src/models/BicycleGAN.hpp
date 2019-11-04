@@ -5,43 +5,44 @@
 #include "BaseModel.hpp"
 #include "../utils/TorchUtils.hpp"
 
-namespace ofxLibTorch
+namespace ofx {
+namespace libtorch {
+
+class BicycleGAN final : public BaseModel
 {
+public:
+    BicycleGAN();
+    BicycleGAN(const std::string& modelPath);
+    void init(const std::string& modelPath);
+    void forward(ofFloatImage& img);
 
-    class BicycleGAN final : public BaseModel
+    void stepNoise();
+
+    static void addNoise(ofFloatImage& img, const float strength);
+    static void invert(ofFloatImage& img);
+
+    static inline void normalize_(at::Tensor& tensor)
     {
-    public:
-        BicycleGAN();
-        BicycleGAN(const std::string& modelPath);
-        void init(const std::string& modelPath);
-        void forward(ofFloatImage& img);
+        tensor.mul_(2.0).sub_(1.0);
+    }
 
-        void stepNoise();
+    static inline void denormalize_(at::Tensor& tensor)
+    {
+        tensor.add_(1.0).mul_(0.5);
+    }
 
-        static void addNoise(ofFloatImage& img, const float strength);
-        static void invert(ofFloatImage& img);
+private:
+    const int mBatchSize { 1 };
+    const int mDimZ { 8 };
 
-        static inline void normalize_(at::Tensor& tensor)
-        {
-            tensor.mul_(2.0).sub_(1.0);
-        }
+    // Latent vector
+    at::Tensor mNoiseTensor;
+    at::Tensor mStartNoiseTensor;
+    at::Tensor mGoalNoiseTensor;
 
-        static inline void denormalize_(at::Tensor& tensor)
-        {
-            tensor.add_(1.0).mul_(0.5);
-        }
+    float mNoiseStepCounter { 0.0f };
+    const float mNoiseMaxSteps { 60.0f };
+};
 
-    private:
-        const int mBatchSize { 1 };
-        const int mDimZ { 8 };
-
-        // Latent vector
-        at::Tensor mNoiseTensor;
-        at::Tensor mStartNoiseTensor;
-        at::Tensor mGoalNoiseTensor;
-
-        float mNoiseStepCounter { 0.0f };
-        const float mNoiseMaxSteps { 60.0f };
-    };
-
-} // namespace ofxLibTorch
+} // namespace libTorch
+} // namespace ofx

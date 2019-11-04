@@ -6,3 +6,5 @@
 #include "models/BigGAN.hpp"
 #include "models/PGGAN.hpp"
 #include "models/VGG16.hpp"
+
+namespace ofxLibTorch = ofx::libtorch;

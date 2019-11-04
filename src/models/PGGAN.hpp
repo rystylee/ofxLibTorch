@@ -4,35 +4,36 @@
 
 #include "BaseModel.hpp"
 
-namespace ofxLibTorch
+namespace ofx {
+namespace libtorch {
+
+class PGGAN final : public BaseModel 
 {
+public:
+    PGGAN();
+    PGGAN(const std::string& modelPath);
+    void init(const std::string& modelPath);
+    void forward(ofFloatImage& img);
+    void stepNoise();
 
-    class PGGAN final : public BaseModel 
+    static inline void denormalize_(at::Tensor& tensor)
     {
-    public:
-        PGGAN();
-        PGGAN(const std::string& modelPath);
-        void init(const std::string& modelPath);
-        void forward(ofFloatImage& img);
-        void stepNoise();
+        torch::clamp_(tensor.add_(1.0).mul_(0.5), 0, 1);
+    }
 
-        static inline void denormalize_(at::Tensor& tensor)
-        {
-            torch::clamp_(tensor.add_(1.0).mul_(0.5), 0, 1);
-        }
+private:
+    const int mBatchSize { 1 };
+    const int mDimZ { 512 };
 
-    private:
-        const int mBatchSize { 1 };
-        const int mDimZ { 512 };
+    // Latent vector
+    at::Tensor mNoiseTensor;
+    at::Tensor mStartNoiseTensor;
+    at::Tensor mGoalNoiseTensor;
 
-        // Latent vector
-        at::Tensor mNoiseTensor;
-        at::Tensor mStartNoiseTensor;
-        at::Tensor mGoalNoiseTensor;
+    float mNoiseStepCounter { 0.0f };
+    const float mNoiseMaxSteps { 60.0f };
 
-        float mNoiseStepCounter { 0.0f };
-        const float mNoiseMaxSteps { 60.0f };
+};
 
-    };
-
-}
+} // namespace libtorch
+} // namespace ofx

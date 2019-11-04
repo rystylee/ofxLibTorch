@@ -1,5 +1,8 @@
 #include "FastFboReader.hpp"
 
+namespace ofx {
+namespace libtorch {
+
 FastFboReader::FastFboReader(const int num_buffers)
     : pboIds(NULL)
     , async(true)
@@ -180,3 +183,6 @@ void FastFboReader::setupPBOs(int num_bytes)
     
     glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
 }
+
+} // namespace libtorch
+} // namespace ofx

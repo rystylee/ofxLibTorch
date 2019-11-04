@@ -7,6 +7,9 @@
 
 #include "ofMain.h"
 
+namespace ofx {
+namespace libtorch {
+
 class FastFboReader
 {
 public:
@@ -34,3 +37,6 @@ protected:
     void setupPBOs(int num_bytes);
 
 };
+
+} // namespace libtorch
+} // namespace ofx

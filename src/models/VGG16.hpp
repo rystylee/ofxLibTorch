@@ -14,8 +14,6 @@ class VGG16 final : public BaseModel
 public:
     VGG16();
     void init(const std::string& modelPath);
-    //std::pair<int, float> forward(const ofFbo& inputFbo);
-    //std::pair<int, at::Tensor> forward(const ofFbo& inputFbo);
 
     template <typename T>
     T forward(const ofFbo& inputFbo);

@@ -134,6 +134,11 @@ void BigGAN::stepNoise(const float truncation)
     mNoiseStepCounter += 1.0f;
 }
 
+void BigGAN::randomizeNoise(const float truncation)
+{
+    mNoiseTensor = truncatedNoiseSample({ mBatchSize, mDimZ }, truncation);
+}
+
 at::Tensor BigGAN::truncatedNoiseSample(c10::IntArrayRef size, const float truncation)
 {
     at::Tensor noise = torch::zeros(size, at::TensorOptions(at::kFloat)).to(*mDevice.get());

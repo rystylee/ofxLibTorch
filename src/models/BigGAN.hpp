@@ -19,6 +19,7 @@ public:
     //void forward(ofFloatImage& img, const int classIndex, at::Tensor& noiseTensor, const float truncation=0.4f);
     void stepClass();
     void stepNoise(const float truncation=0.4f);
+    void randomizeNoise(const float truncation=0.4f);
 
     static inline void denormalize_(at::Tensor& tensor)
     {

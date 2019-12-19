@@ -10,9 +10,10 @@ an openFrameworks wrapper for [LibTorch](https://pytorch.org/cppdocs/)
 - CUDA v10.0
 - OpenCV
 
-Also tested on macOS with:
-- LibTorch v1.3.1
+Also tested with:
 - macOS Mojave (10.14.6)
+- openFrameworks v0.11.0
+- LibTorch v1.3.1
 
 ## Licence
 [MIT](https://github.com/rystylee/ofxLibTorch/blob/master/LICENSE)

@@ -37,7 +37,7 @@ public:
         auto maxId = torch::argmax(out).item();
         auto maxProb = torch::max(out).item();
 
-        std::cout << "Probability: " << maxProb << std::endl;
+        std::cout << "Probability: " << maxProb.toFloat() << std::endl;
         std::cout << "Label: " << mClassLabels[maxId.toInt()] << std::endl;
 
         return std::make_pair(maxId.toInt(), maxProb.toFloat());

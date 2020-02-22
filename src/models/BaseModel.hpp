@@ -14,7 +14,8 @@ public:
 
 protected:
     std::unique_ptr<torch::Device> mDevice;
-    std::shared_ptr<torch::jit::script::Module> mModule;
+    //std::shared_ptr<torch::jit::script::Module> mModule;
+    torch::jit::script::Module mModule;
 
 };
 

@@ -13,10 +13,10 @@ void Pix2Pix::init(const std::string& modelPath, const int inputH, const int inp
 
     loadModel(modelPath);
 
-    if (mModule == nullptr)
-        std::cerr << "Error: Failed to load Torch Script Module..." << std::endl;
-    else
-        std::cout << "Succeed to load Torch Script Module!" << std::endl;
+    //if (mModule == nullptr)
+    //    std::cerr << "Error: Failed to load Torch Script Module..." << std::endl;
+    //else
+    //    std::cout << "Succeed to load Torch Script Module!" << std::endl;
 }
 
 void Pix2Pix::forward(ofFloatImage& img)
@@ -34,7 +34,7 @@ void Pix2Pix::forward(ofFloatImage& img)
     // Forward process
     // outputTensor { batch, channel, height, width }
     //
-    at::Tensor outputTensor = mModule->forward({ inputTensor }).toTensor();
+    at::Tensor outputTensor = mModule.forward({ inputTensor }).toTensor();
 
     // Denormalize
     Pix2Pix::denormalize_(outputTensor);

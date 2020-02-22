@@ -39,7 +39,7 @@ void BigGAN::forward(ofFloatImage& img, const float truncation)
     // Forward process
     // output_tensor { batch, channel, height, width }
     //
-    at::Tensor outputTensor = mModule->forward({ mNoiseTensor, mClassTensor, truncationTensor }).toTensor();
+    at::Tensor outputTensor = mModule.forward({ mNoiseTensor, mClassTensor, truncationTensor }).toTensor();
 
     // Denormalize
     BigGAN::denormalize_(outputTensor);
@@ -65,7 +65,7 @@ void BigGAN::forward(ofFloatImage& img, const int classIndex, const float trunca
     // Forward process
     // output_tensor { batch, channel, height, width }
     //
-    at::Tensor outputTensor = mModule->forward({ mNoiseTensor, classTensor, truncationTensor }).toTensor();
+    at::Tensor outputTensor = mModule.forward({ mNoiseTensor, classTensor, truncationTensor }).toTensor();
 
     // Denormalize
     BigGAN::denormalize_(outputTensor);
@@ -89,7 +89,7 @@ void BigGAN::forward(ofFloatImage& img, at::Tensor& classTensor, const float tru
     // Forward process
     // output_tensor { batch, channel, height, width }
     //
-    at::Tensor outputTensor = mModule->forward({ mNoiseTensor, classTensor, truncationTensor }).toTensor();
+    at::Tensor outputTensor = mModule.forward({ mNoiseTensor, classTensor, truncationTensor }).toTensor();
 
     // Denormalize
     BigGAN::denormalize_(outputTensor);

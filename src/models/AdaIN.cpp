@@ -39,7 +39,7 @@ void AdaIN::forward(const ofFbo& contentFbo, const ofFbo& styleFbo, const float 
     // Forward process
     // output_tensor { batch, channel, height, width }
     //
-    at::Tensor output_tensor = mModule->forward({ contentTensor, styleTensor, alpha_tensor }).toTensor();
+    at::Tensor output_tensor = mModule.forward({ contentTensor, styleTensor, alpha_tensor }).toTensor();
 
     denormalize_(output_tensor);
 

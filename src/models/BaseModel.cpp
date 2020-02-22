@@ -16,12 +16,7 @@ BaseModel::BaseModel()
 void BaseModel::loadModel(const std::string& modelPath)
 {
     mModule = torch::jit::load(modelPath, *mDevice.get());
-    mModule->eval();
-
-    if (mModule == nullptr)
-        std::cerr << "Error: Failed to load Torch Script Module..." << std::endl;
-    else
-        std::cout << "Succeed to load Torch Script Module!" << std::endl;
+    mModule.eval();
 }
 
 } // namespace libTorch

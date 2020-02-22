@@ -58,9 +58,9 @@ void ofApp::update()
 //--------------------------------------------------------------
 void ofApp::draw()
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    mAdaIN.render(glm::vec2(0), ofGetWidth(), ofGetHeight());
+    //glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    //glClear(GL_COLOR_BUFFER_BIT);
+    //mAdaIN.render(glm::vec2(0), ofGetWidth(), ofGetHeight());
 
     if (mIsShowGui) renderGui();
 }

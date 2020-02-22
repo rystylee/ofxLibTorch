@@ -32,7 +32,7 @@ void PGGAN::forward(ofFloatImage& img)
     // Forward process
     // output_tensor { batch, channel, height, width }
     //
-    at::Tensor outputTensor = mModule->forward({ mNoiseTensor }).toTensor();
+    at::Tensor outputTensor = mModule.forward({ mNoiseTensor }).toTensor();
 
     // Denormalize
     PGGAN::denormalize_(outputTensor);

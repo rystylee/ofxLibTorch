@@ -34,7 +34,7 @@ void VGG16::init(const std::string& modelPath)
 //    // Forward process
 //    // outputTensor { batch, 1000 }
 //    //
-//    at::Tensor outputTensor = mModule->forward({ inputTensor }).toTensor();
+//    at::Tensor outputTensor = mModule.forward({ inputTensor }).toTensor();
 //
 //    at::Tensor out = torch::softmax(outputTensor, 1);
 //    auto maxId = torch::argmax(out).item();

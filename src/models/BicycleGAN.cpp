@@ -36,7 +36,7 @@ void BicycleGAN::forward(ofFloatImage& img)
     // Forward process
     // output_tensor { batch, channel, height, width }
     //
-    at::Tensor output_tensor = mModule->forward({ inputTensor, mNoiseTensor }).toTensor();
+    at::Tensor output_tensor = mModule.forward({ inputTensor, mNoiseTensor }).toTensor();
 
     // Denormalize
     BicycleGAN::denormalize_(output_tensor);

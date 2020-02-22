@@ -19,7 +19,7 @@ meta:
     ADDON_DESCRIPTION = Addon for LibTorch
     ADDON_AUTHOR = @rystylee
     ADDON_TAGS = "machine learning" "deep learning"
-    ADDON_URL = http://github.com/yournamehere/ofxAddonTemplate
+    ADDON_URL = https://github.com/rystylee/ofxLibTorch
 
 common:
     # dependencies with other addons, a list of them separated by spaces 
@@ -94,25 +94,25 @@ vs:
 
     ADDON_INCLUDES = 
     ADDON_INCLUDES += "src"
-    ADDON_INCLUDES += "libs/libtorch-v.1.1.0-windows-cu100-release/include"
-    ADDON_INCLUDES += "libs/libtorch-v.1.1.0-windows-cu100-release/include/torch/csrc/api/include"
+    ADDON_INCLUDES += "libs/libtorch_v.1.4.0/include/vs/x64/Release"
+    ADDON_INCLUDES += "libs/libtorch_v.1.4.0/include/vs/x64/Release/torch/csrc/api/include"
     ADDON_INCLUDES += "C:/Program Files/NVIDIA Corporation/NvToolsExt/include"
-    ADDON_INCLUDES += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/include"
+    ADDON_INCLUDES += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/include"
 
     ADDON_INCLUDES += "libs/opencv-4.1.0-vc14_vc15/build/include"
 
     ADDON_LIBS = 
-    ADDON_LIBS += "libs/libtorch-v.1.1.0-windows-cu100-release/lib/torch.lib"
-    ADDON_LIBS += "libs/libtorch-v.1.1.0-windows-cu100-release/lib/c10.lib"
-    ADDON_LIBS += "libs/libtorch-v.1.1.0-windows-cu100-release/lib/c10_cuda.lib"
-    ADDON_LIBS += "libs/libtorch-v.1.1.0-windows-cu100-release/lib/caffe2_gpu.lib"
-    ADDON_LIBS += "libs/libtorch-v.1.1.0-windows-cu100-release/lib/caffe2.lib"
+    ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Release/c10.lib"
+    ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Release/caffe2_nvrtc.lib"
+    ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Release/c10_cuda.lib"
+    ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Release/torch.lib"
     ADDON_LIBS += "C:/Program Files/NVIDIA Corporation/NvToolsExt/lib/x64/nvToolsExt64_1.lib"
-    ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/x64/cudart.lib"
-    ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/x64/cufft.lib"
-    ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/x64/curand.lib"
-    ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/x64/cudnn.lib"
-    ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/x64/cublas.lib"
+
+    ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/lib/x64/cudart_static.lib"
+    ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/lib/x64/cufft.lib"
+    ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/lib/x64/curand.lib"
+    ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/lib/x64/cublas.lib"
+    ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/lib/x64/cudnn.lib"
 
     ADDON_LIBS += "libs/opencv-4.1.0-vc14_vc15/build/x64/vc15/lib/opencv_world410.lib"
 

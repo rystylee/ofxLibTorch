@@ -94,18 +94,31 @@ vs:
 
     ADDON_INCLUDES = 
     ADDON_INCLUDES += "src"
+
+    # Release
     ADDON_INCLUDES += "libs/libtorch_v.1.4.0/include/vs/x64/Release"
     ADDON_INCLUDES += "libs/libtorch_v.1.4.0/include/vs/x64/Release/torch/csrc/api/include"
+    # Debug
+    # ADDON_INCLUDES += "libs/libtorch_v.1.4.0/include/vs/x64/Debug"
+    # ADDON_INCLUDES += "libs/libtorch_v.1.4.0/include/vs/x64/Debug/torch/csrc/api/include"
+
     ADDON_INCLUDES += "C:/Program Files/NVIDIA Corporation/NvToolsExt/include"
     ADDON_INCLUDES += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/include"
 
-    ADDON_INCLUDES += "libs/opencv-4.1.0-vc14_vc15/build/include"
+    ADDON_INCLUDES += "libs/opencv-4.2.0-vc14_vc15/build/include"
 
     ADDON_LIBS = 
+    # Release
     ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Release/c10.lib"
     ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Release/caffe2_nvrtc.lib"
     ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Release/c10_cuda.lib"
     ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Release/torch.lib"
+    # Debug
+    # ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Debug/c10.lib"
+    # ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Debug/caffe2_nvrtc.lib"
+    # ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Debug/c10_cuda.lib"
+    # ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Debug/torch.lib"
+
     ADDON_LIBS += "C:/Program Files/NVIDIA Corporation/NvToolsExt/lib/x64/nvToolsExt64_1.lib"
 
     ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/lib/x64/cudart_static.lib"
@@ -114,7 +127,7 @@ vs:
     ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/lib/x64/cublas.lib"
     ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/lib/x64/cudnn.lib"
 
-    ADDON_LIBS += "libs/opencv-4.1.0-vc14_vc15/build/x64/vc15/lib/opencv_world410.lib"
+    ADDON_LIBS += "libs/opencv-4.2.0-vc14_vc15/build/x64/vc15/lib/opencv_world420.lib"
 
 linuxarmv6l:
 linuxarmv7l:

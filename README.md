@@ -8,7 +8,7 @@ an openFrameworks wrapper for [LibTorch](https://pytorch.org/cppdocs/)
 - LibTorch v1.4.0
 - Windows10
 - CUDA v10.1
-- OpenCV v.4.1.0
+- OpenCV v.4.2.0
 
 ## Licence
 [MIT](https://github.com/rystylee/ofxLibTorch/blob/master/LICENSE)

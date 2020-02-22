@@ -27,5 +27,5 @@ void BaseModel::loadModel(const std::string& modelPath)
     mModule.eval();
 }
 
-} // namespace libTorch
+} // namespace libtorch
 } // namespace ofx

@@ -27,8 +27,10 @@ void ofApp::setup()
 
     mContentVideoPlayer.load("videos/Big_Buck_Bunny.mp4");
     mContentVideoPlayer.setVolume(0);
+    mContentVideoPlayer.play();
     mStyleVideoPlayer.load("videos/GHOST_IN_THE_SHELL_-_REEL.mp4");
     mStyleVideoPlayer.setVolume(0);
+    mStyleVideoPlayer.play();
 
     mAdaIN.init("data/models/AdaIN_gpu_cw_640_ch_360_sw_320_sh_180.pt");
 
@@ -58,9 +60,9 @@ void ofApp::update()
 //--------------------------------------------------------------
 void ofApp::draw()
 {
-    //glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    //glClear(GL_COLOR_BUFFER_BIT);
-    //mAdaIN.render(glm::vec2(0), ofGetWidth(), ofGetHeight());
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    mAdaIN.render(glm::vec2(0), ofGetWidth(), ofGetHeight());
 
     if (mIsShowGui) renderGui();
 }

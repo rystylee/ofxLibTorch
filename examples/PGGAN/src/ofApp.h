@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 
-#include "ofxLibTorch.h"
+#include "PGGAN.hpp"
 #include "ofxImGui.h"
 
 class ofApp : public ofBaseApp
@@ -20,7 +20,7 @@ public:
 
     ofFloatImage mImg;
 
-    ofxLibTorch::PGGAN mPGGAN;
+    PGGAN mPGGAN;
 
     ofxImGui::Gui mGui;
     bool mIsShowGui { true };

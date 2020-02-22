@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 
-#include "ofxLibTorch.h"
+#include "VGG16.hpp"
 #include "ofxImGui.h"
 
 class ofApp : public ofBaseApp
@@ -18,7 +18,7 @@ public:
     ofVideoGrabber mVideoGrabber;
     ofFbo mCamFbo;
 
-    ofxLibTorch::VGG16 mVGG16;
+    VGG16 mVGG16;
 
     ofxImGui::Gui mGui;
     bool mIsShowGui { true };

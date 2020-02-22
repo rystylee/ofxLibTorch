@@ -41,7 +41,7 @@ void ofApp::update()
         mVideoGrabber.draw(glm::vec2(0), mCamFbo.getWidth(), mCamFbo.getHeight());
         mCamFbo.end();
 
-        mVGG16.forward(mCamFbo);
+        auto resoult = mVGG16.forward<std::pair<int, at::Tensor>>(mCamFbo);
     }
 }
 

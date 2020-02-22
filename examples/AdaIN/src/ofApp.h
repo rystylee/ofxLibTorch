@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 
-#include "ofxLibTorch.h"
+#include "AdaIN.hpp"
 #include "ofxImGui.h"
 
 class ofApp : public ofBaseApp
@@ -16,7 +16,7 @@ public:
     void renderGui();
 
 private:
-    ofxLibTorch::AdaIN mAdaIN;
+    AdaIN mAdaIN;
 
     std::array<int, 2> mContentDims { 640, 320 };
     std::array<int, 2> mStyleDims { 320, 180 };

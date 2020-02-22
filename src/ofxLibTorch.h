@@ -1,10 +1,8 @@
 #pragma once
 
-#include "models/AdaIN.hpp"
-#include "models/BicycleGAN.hpp"
-#include "models/Pix2Pix.hpp"
-#include "models/BigGAN.hpp"
-#include "models/PGGAN.hpp"
-#include "models/VGG16.hpp"
+#include "BaseModel.hpp"
+#include "FastFboReader.hpp"
+#include "utils/TorchUtils.hpp"
+#include "utils/Utils.hpp"
 
 namespace ofxLibTorch = ofx::libtorch;

@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 
-#include "ofxLibTorch.h"
+#include "BicycleGAN.hpp"
 #include "ofxImGui.h"
 
 class ofApp : public ofBaseApp
@@ -16,7 +16,7 @@ public:
     void renderGui();
 
 private:
-    ofxLibTorch::BicycleGAN mBicycleGAN;
+    BicycleGAN mBicycleGAN;
 
     ofFloatImage mImg;
 

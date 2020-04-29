@@ -37,7 +37,7 @@ common:
     
     # any special flag that should be passed to the compiler for c++ files when 
     # using this addon
-    # ADDON_CPPFLAGS =
+    ADDON_CPPFLAGS = "-std=c++14"
     
     # any special flag that should be passed to the linker when using this
     # addon, also used for system libraries with -lname

@@ -15,8 +15,9 @@ an openFrameworks wrapper for [LibTorch](https://pytorch.org/cppdocs/)
 1. Download LibTorch from https://pytorch.org/get-started/locally/
 2. Unzip the downloaded file and copy the contents of the "include" and "lib" directories to the following location
 
-- libtorch-win-shared-with-deps-1.4.0/include >> libs/libtorch_v.1.4.0/include/vs/x64/Release
-- libtorch-win-shared-with-deps-1.4.0/lib >> libs/libtorch_v.1.4.0/lib/vs/x64/Release
+### Windows
+- libtorch-win-shared-with-deps-1.4.0/include >> libs/win/include/vs/x64/Release
+- libtorch-win-shared-with-deps-1.4.0/lib >> libs/win/lib/vs/x64/Release
 
 ## Licence
 [MIT](https://github.com/rystylee/ofxLibTorch/blob/master/LICENSE)

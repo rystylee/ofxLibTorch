@@ -62,7 +62,7 @@ common:
     # ADDON_OBJC_SOURCES = 
     
     # derines that will be passed to the compiler when including this addon
-    # ADDON_DEFINES
+    ADDON_DEFINES = "AT_PARALLEL_OPENMP=1"
     
     # some addons need resources to be copied to the bin/data folder of the project
     # specify here any files that need to be copied, you can use wildcards like * and ?

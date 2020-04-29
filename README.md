@@ -9,7 +9,7 @@ an openFrameworks wrapper for [LibTorch](https://pytorch.org/cppdocs/)
 - CUDA v10.1
 - openFramewrks v0.11.0
 - LibTorch v1.4.0
-- OpenCV v.4.2.0
+- ofxOpenCV
 
 ## Install
 1. Download LibTorch from https://pytorch.org/get-started/locally/

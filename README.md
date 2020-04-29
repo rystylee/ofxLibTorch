@@ -18,5 +18,38 @@ an openFrameworks wrapper for [LibTorch](https://pytorch.org/cppdocs/)
 - libtorch-win-shared-with-deps-1.4.0/include >> libs/libtorch_v.1.4.0/include/vs/x64/Release
 - libtorch-win-shared-with-deps-1.4.0/lib >> libs/libtorch_v.1.4.0/lib/vs/x64/Release
 
+### macOS
+- libtorch-macos-1.4.0/include >> libs/osx/include
+- libtorch-macos-1.4.0/lib >> libs/osx/lib
+
+3. In Xcode Build Settings:
+ - Under linking -> runpath search paths, add @loader_path/../Frameworks
+ - Under search paths -> use header maps, set NO
+
+
+4. In Xcode Build Phases -> Run Script, add:
+
+```
+rsync -aved "$OF_PATH/addons/ofxLibTorch2/libs/lib/libc10.dylib" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
+rsync -aved "$OF_PATH/addons/ofxLibTorch2/libs/lib/libtorch.dylib" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
+rsync -aved "$OF_PATH/addons/ofxLibTorch2/libs/lib/libtorch_cpu.dylib" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
+rsync -aved "$OF_PATH/addons/ofxLibTorch2/libs/lib/libiomp5.dylib" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
+```
+
+and
+
+```
+install_name_tool -change @rpath/libtorch.dylib @loader_path/../Frameworks/libtorch.dylib "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME";
+install_name_tool -change @rpath/libtorch_cpu.dylib @loader_path/../Frameworks/libtorch_cpu.dylib "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME";
+install_name_tool -change @rpath/libc10.dylib @loader_path/../Frameworks/libc10.dylib "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME";
+install_name_tool -change /DLC/torch/libiomp5.dylib @loader_path/../Frameworks/libiomp5.dylib "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME";
+```
+
+before
+
+```
+echo "$GCC_PREPROCESSOR_DEFINITIONS";
+```
+
 ## Licence
 [MIT](https://github.com/rystylee/ofxLibTorch/blob/master/LICENSE)

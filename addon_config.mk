@@ -134,7 +134,13 @@ linuxarmv7l:
 android/armeabi:    
 android/armeabi-v7a:    
 osx:
-    # osx/iOS only, any framework that should be included in the project
-    # ADDON_FRAMEWORKS =
+    ADDON_INCLUDES += "libs/osx/include"
+    ADDON_INCLUDES += "libs/osx/include/torch/csrc/api/include"
+
+    ADDON_LIBS += "libs/osx/lib/libc10.dylib"
+    ADDON_LIBS += "libs/osx/lib/libtorch.dylib"
+    ADDON_LIBS += "libs/osx/lib/libtorch_cpu.dylib"
+    ADDON_LIBS += "libs/osx/lib/libiomp5.dylib"
+
 ios:
 tvos:

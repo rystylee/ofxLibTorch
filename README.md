@@ -30,10 +30,10 @@ an openFrameworks wrapper for [LibTorch](https://pytorch.org/cppdocs/)
 4. In Xcode Build Phases -> Run Script, add:
 
 ```
-rsync -aved "$OF_PATH/addons/ofxLibTorch2/libs/lib/libc10.dylib" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
-rsync -aved "$OF_PATH/addons/ofxLibTorch2/libs/lib/libtorch.dylib" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
-rsync -aved "$OF_PATH/addons/ofxLibTorch2/libs/lib/libtorch_cpu.dylib" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
-rsync -aved "$OF_PATH/addons/ofxLibTorch2/libs/lib/libiomp5.dylib" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
+rsync -aved "$OF_PATH/addons/ofxLibTorch/libs/osx/lib/libc10.dylib" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
+rsync -aved "$OF_PATH/addons/ofxLibTorch/libs/osx/lib/libtorch.dylib" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
+rsync -aved "$OF_PATH/addons/ofxLibTorch/libs/osx/lib/libtorch_cpu.dylib" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
+rsync -aved "$OF_PATH/addons/ofxLibTorch/libs/osx/lib/libiomp5.dylib" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
 ```
 
 and

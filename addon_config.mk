@@ -1,3 +1,4 @@
+=======
 # All variables and this file are optional, if they are not present the PG and the
 # makefiles will try to parse the correct values from the file system.
 #
@@ -24,12 +25,13 @@ meta:
 common:
     # dependencies with other addons, a list of them separated by spaces 
     # or use += in several lines
-    # ADDON_DEPENDENCIES =
+    ADDON_DEPENDENCIES = ofxOpenCv
     
     # include search paths, this will be usually parsed from the file system
     # but if the addon or addon libraries need special search paths they can be
     # specified here separated by spaces or one per line using +=
-    # ADDON_INCLUDES =
+    ADDON_INCLUDES =
+    ADDON_INCLUDES += "src"
     
     # any special flag that should be passed to the compiler when using this
     # addon
@@ -37,7 +39,7 @@ common:
     
     # any special flag that should be passed to the compiler for c++ files when 
     # using this addon
-    # ADDON_CPPFLAGS =
+    ADDON_CPPFLAGS = "-std=c++14"
     
     # any special flag that should be passed to the linker when using this
     # addon, also used for system libraries with -lname
@@ -62,7 +64,7 @@ common:
     # ADDON_OBJC_SOURCES = 
     
     # derines that will be passed to the compiler when including this addon
-    # ADDON_DEFINES
+    ADDON_DEFINES = "AT_PARALLEL_OPENMP=1"
     
     # some addons need resources to be copied to the bin/data folder of the project
     # specify here any files that need to be copied, you can use wildcards like * and ?
@@ -75,12 +77,7 @@ common:
     # binary libraries, these will be usually parsed from the file system but some 
     # libraries need to passed to the linker in a specific order/
     # 
-    # For example in the ofxOpenCV addon we do something like this:
-    #
-    # ADDON_LIBS =
-    # ADDON_LIBS += libs/opencv/lib/linuxarmv6l/libopencv_legacy.a
-    # ADDON_LIBS += libs/opencv/lib/linuxarmv6l/libopencv_calib3d.a
-    # ...
+    ADDON_LIBS =
     
     
 linux64:
@@ -92,32 +89,26 @@ vs:
     # only windows visual studio
     # ADDON_DLLS_TO_COPY = 
 
-    ADDON_INCLUDES = 
-    ADDON_INCLUDES += "src"
-
     # Release
-    ADDON_INCLUDES += "libs/libtorch_v.1.4.0/include/vs/x64/Release"
-    ADDON_INCLUDES += "libs/libtorch_v.1.4.0/include/vs/x64/Release/torch/csrc/api/include"
+    ADDON_INCLUDES += "libs/win/include/vs/x64/Release"
+    ADDON_INCLUDES += "libs/win/include/vs/x64/Release/torch/csrc/api/include"
     # Debug
-    # ADDON_INCLUDES += "libs/libtorch_v.1.4.0/include/vs/x64/Debug"
-    # ADDON_INCLUDES += "libs/libtorch_v.1.4.0/include/vs/x64/Debug/torch/csrc/api/include"
+    # ADDON_INCLUDES += "libs/win/include/vs/x64/Debug"
+    # ADDON_INCLUDES += "libs/win/include/vs/x64/Debug/torch/csrc/api/include"
 
     ADDON_INCLUDES += "C:/Program Files/NVIDIA Corporation/NvToolsExt/include"
     ADDON_INCLUDES += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/include"
 
-    ADDON_INCLUDES += "libs/opencv-4.2.0-vc14_vc15/build/include"
-
-    ADDON_LIBS = 
     # Release
-    ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Release/c10.lib"
-    ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Release/caffe2_nvrtc.lib"
-    ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Release/c10_cuda.lib"
-    ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Release/torch.lib"
+    ADDON_LIBS += "libs/win/lib/vs/x64/Release/c10.lib"
+    ADDON_LIBS += "libs/win/lib/vs/x64/Release/caffe2_nvrtc.lib"
+    ADDON_LIBS += "libs/win/lib/vs/x64/Release/c10_cuda.lib"
+    ADDON_LIBS += "libs/win/lib/vs/x64/Release/torch.lib"
     # Debug
-    # ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Debug/c10.lib"
-    # ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Debug/caffe2_nvrtc.lib"
-    # ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Debug/c10_cuda.lib"
-    # ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Debug/torch.lib"
+    # ADDON_LIBS += "libs/win/lib/vs/x64/Debug/c10.lib"
+    # ADDON_LIBS += "libs/win/lib/vs/x64/Debug/caffe2_nvrtc.lib"
+    # ADDON_LIBS += "libs/win/lib/vs/x64/Debug/c10_cuda.lib"
+    # ADDON_LIBS += "libs/win/lib/vs/x64/Debug/torch.lib"
 
     ADDON_LIBS += "C:/Program Files/NVIDIA Corporation/NvToolsExt/lib/x64/nvToolsExt64_1.lib"
 
@@ -127,13 +118,14 @@ vs:
     ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/lib/x64/cublas.lib"
     ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/lib/x64/cudnn.lib"
 
-    ADDON_LIBS += "libs/opencv-4.2.0-vc14_vc15/build/x64/vc15/lib/opencv_world420.lib"
-
 linuxarmv6l:
 linuxarmv7l:
 android/armeabi:    
 android/armeabi-v7a:    
 osx:
+    # osx/iOS only, any framework that should be included in the project
+    # ADDON_FRAMEWORKS =
+    
     ADDON_INCLUDES += "libs/osx/include"
     ADDON_INCLUDES += "libs/osx/include/torch/csrc/api/include"
 

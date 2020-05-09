@@ -24,7 +24,7 @@ meta:
 common:
     # dependencies with other addons, a list of them separated by spaces 
     # or use += in several lines
-    # ADDON_DEPENDENCIES =
+    ADDON_DEPENDENCIES = ofxOpenCv
     
     # include search paths, this will be usually parsed from the file system
     # but if the addon or addon libraries need special search paths they can be
@@ -105,8 +105,6 @@ vs:
     ADDON_INCLUDES += "C:/Program Files/NVIDIA Corporation/NvToolsExt/include"
     ADDON_INCLUDES += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/include"
 
-    ADDON_INCLUDES += "libs/opencv-4.2.0-vc14_vc15/build/include"
-
     ADDON_LIBS = 
     # Release
     ADDON_LIBS += "libs/libtorch_v.1.4.0/lib/vs/x64/Release/c10.lib"
@@ -126,8 +124,6 @@ vs:
     ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/lib/x64/curand.lib"
     ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/lib/x64/cublas.lib"
     ADDON_LIBS += "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.1/lib/x64/cudnn.lib"
-
-    ADDON_LIBS += "libs/opencv-4.2.0-vc14_vc15/build/x64/vc15/lib/opencv_world420.lib"
 
 linuxarmv6l:
 linuxarmv7l:

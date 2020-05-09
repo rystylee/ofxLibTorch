@@ -38,7 +38,7 @@ common:
     
     # any special flag that should be passed to the compiler for c++ files when 
     # using this addon
-    # ADDON_CPPFLAGS =
+    ADDON_CPPFLAGS = "-std=c++14"
     
     # any special flag that should be passed to the linker when using this
     # addon, also used for system libraries with -lname
@@ -63,7 +63,7 @@ common:
     # ADDON_OBJC_SOURCES = 
     
     # derines that will be passed to the compiler when including this addon
-    # ADDON_DEFINES
+    ADDON_DEFINES = "AT_PARALLEL_OPENMP=1"
     
     # some addons need resources to be copied to the bin/data folder of the project
     # specify here any files that need to be copied, you can use wildcards like * and ?

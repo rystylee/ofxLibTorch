@@ -1,3 +1,4 @@
+=======
 # All variables and this file are optional, if they are not present the PG and the
 # makefiles will try to parse the correct values from the file system.
 #
@@ -124,5 +125,14 @@ android/armeabi-v7a:
 osx:
     # osx/iOS only, any framework that should be included in the project
     # ADDON_FRAMEWORKS =
+    
+    ADDON_INCLUDES += "libs/osx/include"
+    ADDON_INCLUDES += "libs/osx/include/torch/csrc/api/include"
+
+    ADDON_LIBS += "libs/osx/lib/libc10.dylib"
+    ADDON_LIBS += "libs/osx/lib/libtorch.dylib"
+    ADDON_LIBS += "libs/osx/lib/libtorch_cpu.dylib"
+    ADDON_LIBS += "libs/osx/lib/libiomp5.dylib"
+
 ios:
 tvos:
